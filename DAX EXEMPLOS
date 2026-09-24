@@ -1,0 +1,13 @@
+Calendario = 
+VAR AnoAtual = YEAR(TODAY())
+VAR DataInicio = DATE(AnoAtual - 1, 1, 1)   -- Primeiro dia do ano anterior
+VAR DataFim    = DATE(AnoAtual, 12, 31)     -- Último dia do ano atual
+RETURN
+ADDCOLUMNS(
+    CALENDAR(DataInicio, DataFim),
+    "Ano", YEAR([Date]),
+    "Mes Numero", MONTH([Date]),
+    "Nome Mes", UPPER(LEFT(FORMAT([Date], "MMMM"),1)) & LOWER(RIGHT(FORMAT([Date], "MMMM"), LEN(FORMAT([Date], "MMMM"))-1)),
+    "Trimestre", "Q" & FORMAT(QUARTER([Date]), "0"),
+    "Semestre", IF(MONTH([Date])<=6, "1º Semestre", "2º Semestre")
+)
